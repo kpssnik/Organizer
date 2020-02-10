@@ -1,0 +1,12 @@
+C:\Users\Student\Documents\Кальницкий [Не удалять]\kpssOrganizer\KpssOrganizer\KpssOrganizer\bin\Debug\KpssOrganizer.exe.config
+C:\Users\Student\Documents\Кальницкий [Не удалять]\kpssOrganizer\KpssOrganizer\KpssOrganizer\bin\Debug\KpssOrganizer.exe
+C:\Users\Student\Documents\Кальницкий [Не удалять]\kpssOrganizer\KpssOrganizer\KpssOrganizer\bin\Debug\KpssOrganizer.pdb
+C:\Users\Student\Documents\Кальницкий [Не удалять]\kpssOrganizer\KpssOrganizer\KpssOrganizer\bin\Debug\MetroFramework.dll
+C:\Users\Student\Documents\Кальницкий [Не удалять]\kpssOrganizer\KpssOrganizer\KpssOrganizer\bin\Debug\MetroFramework.Fonts.dll
+C:\Users\Student\Documents\Кальницкий [Не удалять]\kpssOrganizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.csprojAssemblyReference.cache
+C:\Users\Student\Documents\Кальницкий [Не удалять]\kpssOrganizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.LoginForm.resources
+C:\Users\Student\Documents\Кальницкий [Не удалять]\kpssOrganizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.Properties.Resources.resources
+C:\Users\Student\Documents\Кальницкий [Не удалять]\kpssOrganizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.csproj.GenerateResource.cache
+C:\Users\Student\Documents\Кальницкий [Не удалять]\kpssOrganizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.csproj.CopyComplete
+C:\Users\Student\Documents\Кальницкий [Не удалять]\kpssOrganizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.exe
+C:\Users\Student\Documents\Кальницкий [Не удалять]\kpssOrganizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.pdb
