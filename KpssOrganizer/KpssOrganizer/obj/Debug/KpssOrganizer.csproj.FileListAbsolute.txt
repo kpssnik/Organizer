@@ -10,3 +10,4 @@ C:\Users\Student\Documents\Кальницкий [Не удалять]\kpssOrgani
 C:\Users\Student\Documents\Кальницкий [Не удалять]\kpssOrganizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.csproj.CopyComplete
 C:\Users\Student\Documents\Кальницкий [Не удалять]\kpssOrganizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.exe
 C:\Users\Student\Documents\Кальницкий [Не удалять]\kpssOrganizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.pdb
+C:\Users\Student\Documents\Кальницкий [Не удалять]\kpssOrganizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.RegisterForm.resources

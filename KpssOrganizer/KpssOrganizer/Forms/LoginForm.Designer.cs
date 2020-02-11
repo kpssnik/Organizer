@@ -35,6 +35,7 @@
             this.passwordTextBox = new MetroFramework.Controls.MetroTextBox();
             this.loginButton = new MetroFramework.Controls.MetroButton();
             this.registerLink = new MetroFramework.Controls.MetroLink();
+            this.infoLabel = new MetroFramework.Controls.MetroLabel();
             this.SuspendLayout();
             // 
             // emailLabel
@@ -94,29 +95,42 @@
             // loginButton
             // 
             this.loginButton.Highlight = true;
-            this.loginButton.Location = new System.Drawing.Point(98, 292);
+            this.loginButton.Location = new System.Drawing.Point(98, 315);
             this.loginButton.Name = "loginButton";
-            this.loginButton.Size = new System.Drawing.Size(185, 23);
+            this.loginButton.Size = new System.Drawing.Size(185, 33);
             this.loginButton.TabIndex = 5;
             this.loginButton.Text = "LOGIN";
+            this.loginButton.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.loginButton.Click += new System.EventHandler(this.loginButton_Click);
             // 
             // registerLink
             // 
             this.registerLink.Cursor = System.Windows.Forms.Cursors.Hand;
             this.registerLink.CustomForeColor = true;
-            this.registerLink.Location = new System.Drawing.Point(98, 348);
+            this.registerLink.Location = new System.Drawing.Point(98, 364);
             this.registerLink.Name = "registerLink";
             this.registerLink.Size = new System.Drawing.Size(190, 23);
             this.registerLink.Style = MetroFramework.MetroColorStyle.Blue;
             this.registerLink.TabIndex = 6;
             this.registerLink.Text = "DO NOT HAVE AN ACCOUNT?";
             this.registerLink.UseStyleColors = true;
+            this.registerLink.Click += new System.EventHandler(this.registerLink_Click);
+            // 
+            // infoLabel
+            // 
+            this.infoLabel.AutoSize = true;
+            this.infoLabel.FontWeight = MetroFramework.MetroLabelWeight.Bold;
+            this.infoLabel.Location = new System.Drawing.Point(153, 293);
+            this.infoLabel.Name = "infoLabel";
+            this.infoLabel.Size = new System.Drawing.Size(0, 0);
+            this.infoLabel.TabIndex = 7;
             // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(385, 470);
+            this.ClientSize = new System.Drawing.Size(385, 410);
+            this.Controls.Add(this.infoLabel);
             this.Controls.Add(this.registerLink);
             this.Controls.Add(this.loginButton);
             this.Controls.Add(this.passwordTextBox);
@@ -128,6 +142,7 @@
             this.Resizable = false;
             this.Text = "Login";
             this.TextAlign = System.Windows.Forms.VisualStyles.HorizontalAlign.Center;
+            this.Load += new System.EventHandler(this.LoginForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -142,6 +157,7 @@
         private MetroFramework.Controls.MetroTextBox passwordTextBox;
         private MetroFramework.Controls.MetroButton loginButton;
         private MetroFramework.Controls.MetroLink registerLink;
+        private MetroFramework.Controls.MetroLabel infoLabel;
     }
 }
 
