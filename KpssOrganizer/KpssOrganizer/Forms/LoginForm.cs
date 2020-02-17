@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using KpssOrganizer.Engine;
 using System.Text.RegularExpressions;
+using KpssOrganizer.Forms;
+using System.Threading;
 
 namespace KpssOrganizer
 {
@@ -40,6 +42,11 @@ namespace KpssOrganizer
                     MessageBox.Show("Welcome, " + loginClient.sessionLogin);
                     // run main form(loginClient.sessionId);
                     // close this form
+                    MainForm form = new MainForm(loginClient.sessionID);
+
+                    form.ShowDialog();
+
+                    this.Close();
                     break;
 
                 case ResponseCode.Login_Fail_AccoundBanned:
