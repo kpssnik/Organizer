@@ -14,10 +14,11 @@ namespace KpssOrganizer.Forms
     public partial class MainForm : MetroForm
     {
         string sessionID;
-        public MainForm(string sessionID)
+        public MainForm(string sessionID, string login)
         {
             InitializeComponent();
             this.sessionID = sessionID;
+            this.Text = login;
         }
 
         private void MainForm_Load(object sender, EventArgs e)

@@ -26,3 +26,19 @@ C:\Users\Student\Documents\Кальницкий\Organizer\KpssOrganizer\KpssOrga
 C:\Users\Student\Documents\Кальницкий\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.pdb
 C:\Users\Student\Documents\Кальницкий\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.Forms.CreateGroupForm.resources
 C:\Users\Student\Documents\Кальницкий\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.Forms.MainForm.resources
+F:\.NET Projects\Organizer\KpssOrganizer\KpssOrganizer\bin\Debug\KpssOrganizer.exe.config
+F:\.NET Projects\Organizer\KpssOrganizer\KpssOrganizer\bin\Debug\KpssOrganizer.exe
+F:\.NET Projects\Organizer\KpssOrganizer\KpssOrganizer\bin\Debug\KpssOrganizer.pdb
+F:\.NET Projects\Organizer\KpssOrganizer\KpssOrganizer\bin\Debug\MetroFramework.dll
+F:\.NET Projects\Organizer\KpssOrganizer\KpssOrganizer\bin\Debug\MetroFramework.Fonts.dll
+F:\.NET Projects\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.csprojAssemblyReference.cache
+F:\.NET Projects\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.Forms.CreateGroupForm.resources
+F:\.NET Projects\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.LoginForm.resources
+F:\.NET Projects\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.Forms.MainForm.resources
+F:\.NET Projects\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.Properties.Resources.resources
+F:\.NET Projects\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.RegisterForm.resources
+F:\.NET Projects\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.csproj.GenerateResource.cache
+F:\.NET Projects\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.csproj.CoreCompileInputs.cache
+F:\.NET Projects\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.csproj.CopyComplete
+F:\.NET Projects\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.exe
+F:\.NET Projects\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.pdb

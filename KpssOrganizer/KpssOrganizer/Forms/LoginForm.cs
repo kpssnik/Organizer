@@ -42,7 +42,7 @@ namespace KpssOrganizer
                     MessageBox.Show("Welcome, " + loginClient.sessionLogin);
                     // run main form(loginClient.sessionId);
                     // close this form
-                    MainForm form = new MainForm(loginClient.sessionID);
+                    MainForm form = new MainForm(loginClient.sessionID, loginClient.sessionLogin);
 
                     form.ShowDialog();
 

@@ -57,7 +57,7 @@ namespace KpssOrganizer.Engine
             {
                 var host = Dns.GetHostEntry(Dns.GetHostName());
                 var result = from a in host.AddressList
-                             where a.AddressFamily == AddressFamily.InterNetwork
+                             where a.AddressFamily == AddressFamily.InterNetwork && a.ToString().Contains("192.168.1")
                              select a.ToString();
 
                 return result.LastOrDefault();
@@ -84,7 +84,7 @@ namespace KpssOrganizer.Engine
             {
                 var host = Dns.GetHostEntry(Dns.GetHostName());
                 var result = from a in host.AddressList
-                             where a.AddressFamily == AddressFamily.InterNetwork
+                             where a.AddressFamily == AddressFamily.InterNetwork && a.ToString().Contains("192.168.1")
                              select a.ToString();
 
                 return result.LastOrDefault();

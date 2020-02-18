@@ -277,8 +277,17 @@ namespace kpssOrganizerServer_TEST
             {
                 string query = "INSERT INTO BannedAccounts(account_id, reason, date) " +
                     $"VALUES({reader["id"].ToString()}, '{banReason}', '{DateTime.Now}')";
-                command = new SQLiteCommand(query, connection);
-                Console.WriteLine(command.ExecuteNonQuery() + " UNDER BAN");
+                try
+                {
+                    command = new SQLiteCommand(query, connection);
+
+                }
+                catch(SQLiteException ex)
+                {
+                    Console.WriteLine("Failed to ban " + reader["username"]);
+                    Console.WriteLine(ex.Message);
+                }
+                Console.WriteLine(reader["username"] + " UNDER BAN");
             }
         }
 

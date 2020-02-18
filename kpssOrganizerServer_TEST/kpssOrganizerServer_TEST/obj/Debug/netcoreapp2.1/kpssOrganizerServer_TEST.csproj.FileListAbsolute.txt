@@ -39,3 +39,14 @@ C:\Users\Student\Documents\Кальницкий\Organizer\kpssOrganizerServer_TE
 C:\Users\Student\Documents\Кальницкий\Organizer\kpssOrganizerServer_TEST\kpssOrganizerServer_TEST\obj\Debug\netcoreapp2.1\kpssOrganizerServer_TEST.AssemblyInfo.cs
 C:\Users\Student\Documents\Кальницкий\Organizer\kpssOrganizerServer_TEST\kpssOrganizerServer_TEST\obj\Debug\netcoreapp2.1\kpssOrganizerServer_TEST.dll
 C:\Users\Student\Documents\Кальницкий\Organizer\kpssOrganizerServer_TEST\kpssOrganizerServer_TEST\obj\Debug\netcoreapp2.1\kpssOrganizerServer_TEST.pdb
+F:\.NET Projects\Organizer\kpssOrganizerServer_TEST\kpssOrganizerServer_TEST\bin\Debug\netcoreapp2.1\kpssOrganizerServer_TEST.deps.json
+F:\.NET Projects\Organizer\kpssOrganizerServer_TEST\kpssOrganizerServer_TEST\bin\Debug\netcoreapp2.1\kpssOrganizerServer_TEST.runtimeconfig.json
+F:\.NET Projects\Organizer\kpssOrganizerServer_TEST\kpssOrganizerServer_TEST\bin\Debug\netcoreapp2.1\kpssOrganizerServer_TEST.runtimeconfig.dev.json
+F:\.NET Projects\Organizer\kpssOrganizerServer_TEST\kpssOrganizerServer_TEST\bin\Debug\netcoreapp2.1\kpssOrganizerServer_TEST.dll
+F:\.NET Projects\Organizer\kpssOrganizerServer_TEST\kpssOrganizerServer_TEST\bin\Debug\netcoreapp2.1\kpssOrganizerServer_TEST.pdb
+F:\.NET Projects\Organizer\kpssOrganizerServer_TEST\kpssOrganizerServer_TEST\obj\Debug\netcoreapp2.1\kpssOrganizerServer_TEST.csprojAssemblyReference.cache
+F:\.NET Projects\Organizer\kpssOrganizerServer_TEST\kpssOrganizerServer_TEST\obj\Debug\netcoreapp2.1\kpssOrganizerServer_TEST.csproj.CoreCompileInputs.cache
+F:\.NET Projects\Organizer\kpssOrganizerServer_TEST\kpssOrganizerServer_TEST\obj\Debug\netcoreapp2.1\kpssOrganizerServer_TEST.AssemblyInfoInputs.cache
+F:\.NET Projects\Organizer\kpssOrganizerServer_TEST\kpssOrganizerServer_TEST\obj\Debug\netcoreapp2.1\kpssOrganizerServer_TEST.AssemblyInfo.cs
+F:\.NET Projects\Organizer\kpssOrganizerServer_TEST\kpssOrganizerServer_TEST\obj\Debug\netcoreapp2.1\kpssOrganizerServer_TEST.dll
+F:\.NET Projects\Organizer\kpssOrganizerServer_TEST\kpssOrganizerServer_TEST\obj\Debug\netcoreapp2.1\kpssOrganizerServer_TEST.pdb
