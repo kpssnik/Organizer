@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupLoginTextBoxgroupLoginTextBox = new System.Windows.Forms.TextBox();
+            this.groupLoginTextBox = new System.Windows.Forms.TextBox();
             this.groupPasswordTextBox = new System.Windows.Forms.TextBox();
             this.createButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
@@ -36,12 +36,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // groupLoginTextBoxgroupLoginTextBox
+            // groupLoginTextBox
             // 
-            this.groupLoginTextBoxgroupLoginTextBox.Location = new System.Drawing.Point(109, 27);
-            this.groupLoginTextBoxgroupLoginTextBox.Name = "groupLoginTextBoxgroupLoginTextBox";
-            this.groupLoginTextBoxgroupLoginTextBox.Size = new System.Drawing.Size(236, 20);
-            this.groupLoginTextBoxgroupLoginTextBox.TabIndex = 0;
+            this.groupLoginTextBox.Location = new System.Drawing.Point(109, 27);
+            this.groupLoginTextBox.Name = "groupLoginTextBox";
+            this.groupLoginTextBox.Size = new System.Drawing.Size(236, 20);
+            this.groupLoginTextBox.TabIndex = 0;
             // 
             // groupPasswordTextBox
             // 
@@ -98,7 +98,7 @@
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.createButton);
             this.Controls.Add(this.groupPasswordTextBox);
-            this.Controls.Add(this.groupLoginTextBoxgroupLoginTextBox);
+            this.Controls.Add(this.groupLoginTextBox);
             this.Name = "CreateGroupForm";
             this.Text = "CreateGroupForm";
             this.Load += new System.EventHandler(this.CreateGroupForm_Load);
@@ -109,7 +109,7 @@
 
         #endregion
 
-        public System.Windows.Forms.TextBox groupLoginTextBoxgroupLoginTextBox;
+        public System.Windows.Forms.TextBox groupLoginTextBox;
         public System.Windows.Forms.TextBox groupPasswordTextBox;
         private System.Windows.Forms.Button createButton;
         private System.Windows.Forms.Button cancelButton;

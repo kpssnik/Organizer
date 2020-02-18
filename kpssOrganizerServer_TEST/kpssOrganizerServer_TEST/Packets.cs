@@ -10,7 +10,8 @@ namespace kpssOrganizerServer_TEST
         Login,
         Message,
         Response,
-        SessionContinue
+        SessionContinue,
+        GroupCreate
     }
     public enum ResponseCode
     {
@@ -23,12 +24,17 @@ namespace kpssOrganizerServer_TEST
         Login_Fail_Unknown = 201,
         Login_Fail_IncorrectData = 202,
         Login_Fail_SessionAlreadyExists = 203,
-        Login_Fail_AccoundBanned = 204
+        Login_Fail_AccoundBanned = 204,
+
+        GroupCreate_Success = 400,
+        GroupCreate_Fail_Unknown = 401,
+        GroupCreate_Fail_LoginExists = 402
     }
     public enum Port
     {
         Server_LoginRegister = 8880,
         Server_SessionCheck = 8881,
+        Server_MainReceiver = 8882,
         Client_ResponseReceive = 8890
 
     }

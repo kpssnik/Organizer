@@ -28,25 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.metroComboBox1 = new MetroFramework.Controls.MetroComboBox();
+            this.createGroupButton = new MetroFramework.Controls.MetroButton();
+            this.joinGroupButton = new MetroFramework.Controls.MetroButton();
             this.SuspendLayout();
             // 
-            // metroComboBox1
+            // createGroupButton
             // 
-            this.metroComboBox1.FormattingEnabled = true;
-            this.metroComboBox1.ItemHeight = 23;
-            this.metroComboBox1.Location = new System.Drawing.Point(424, 209);
-            this.metroComboBox1.Name = "metroComboBox1";
-            this.metroComboBox1.Size = new System.Drawing.Size(121, 29);
-            this.metroComboBox1.TabIndex = 0;
-            this.metroComboBox1.SelectedIndexChanged += new System.EventHandler(this.metroComboBox1_SelectedIndexChanged);
+            this.createGroupButton.Location = new System.Drawing.Point(23, 63);
+            this.createGroupButton.Name = "createGroupButton";
+            this.createGroupButton.Size = new System.Drawing.Size(108, 23);
+            this.createGroupButton.TabIndex = 0;
+            this.createGroupButton.Text = "Create Group";
+            this.createGroupButton.Click += new System.EventHandler(this.createGroupButton_Click);
+            // 
+            // joinGroupButton
+            // 
+            this.joinGroupButton.Location = new System.Drawing.Point(137, 63);
+            this.joinGroupButton.Name = "joinGroupButton";
+            this.joinGroupButton.Size = new System.Drawing.Size(103, 23);
+            this.joinGroupButton.TabIndex = 1;
+            this.joinGroupButton.Text = "Join Group";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.metroComboBox1);
+            this.Controls.Add(this.joinGroupButton);
+            this.Controls.Add(this.createGroupButton);
             this.Name = "MainForm";
             this.Text = "MainForm";
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -56,6 +65,7 @@
 
         #endregion
 
-        private MetroFramework.Controls.MetroComboBox metroComboBox1;
+        private MetroFramework.Controls.MetroButton createGroupButton;
+        private MetroFramework.Controls.MetroButton joinGroupButton;
     }
 }

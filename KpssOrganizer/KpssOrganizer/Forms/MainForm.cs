@@ -4,38 +4,46 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework.Forms;
+using KpssOrganizer.Engine;
 
 namespace KpssOrganizer.Forms
 {
     public partial class MainForm : MetroForm
     {
-        string sessionID;
+        Client client;
+
         public MainForm(string sessionID, string login)
         {
             InitializeComponent();
-            this.sessionID = sessionID;
+            client = new Client();
+            client.sessionID = sessionID;
             this.Text = login;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
-        {
-            DialogResult dr = new DialogResult();
-            CreateGroupForm frm2 = new CreateGroupForm();
-            dr = frm2.ShowDialog();
-            if (dr == DialogResult.OK)
-                MessageBox.Show(frm2.groupLoginTextBoxgroupLoginTextBox.Text + " SESSION: " + sessionID);
-            else if (dr == DialogResult.Cancel)
-                MessageBox.Show("loh");
-                
+        {         
+            client.Connect((int)Port.Server_LoginRegister);
+            client.HoldSession();
+
         }
 
-        private void metroComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void createGroupButton_Click(object sender, EventArgs e)
         {
+            DialogResult dr = new DialogResult();
+            CreateGroupForm cgf = new CreateGroupForm();
+            dr = cgf.ShowDialog();
 
+            CreateGroup(cgf.groupLoginTextBox.Text.Trim(), cgf.groupPasswordTextBox.Text.Trim());
+        }
+
+        public void CreateGroup(string login, string password)
+        {
+            MessageBox.Show(client.CreateGroup(login, password).ToString());
         }
     }
 }

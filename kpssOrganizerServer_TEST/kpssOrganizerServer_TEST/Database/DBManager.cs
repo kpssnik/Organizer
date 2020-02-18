@@ -76,6 +76,19 @@ namespace kpssOrganizerServer_TEST
             command.ExecuteNonQuery();
             Console.WriteLine("Created groups table");
 
+            string groupMembersCreate = @"CREATE TABLE GroupMembers(
+
+    id    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	group_id INTEGER NOT NULL,
+	account_id    INTEGER NOT NULL,
+	FOREIGN KEY(group_id) REFERENCES Groups(id),
+	FOREIGN KEY(account_id) REFERENCES Accounts(id)
+)";
+
+            command = new SQLiteCommand(groupMembersCreate, connection);
+            command.ExecuteNonQuery();
+            Console.WriteLine("Created group members table");
+
             connection.Close();
         }
 
@@ -214,7 +227,6 @@ namespace kpssOrganizerServer_TEST
       
             return temp;
         }
-
         public static void KillSession(string id)
         {
             string query = $"DELETE FROM Sessions WHERE id='{id}'";
@@ -223,7 +235,6 @@ namespace kpssOrganizerServer_TEST
             command.ExecuteNonQuery();
          
         }
-
         public static int KillSessionList(List<string> ids)
         {
             string query = string.Empty;
@@ -239,7 +250,6 @@ namespace kpssOrganizerServer_TEST
   
             return ids.Count;
         }
-
         static string GetField(string tableName, string fieldName, string key, string value)
         {
             string query = $"SELECT {fieldName} FROM {tableName} WHERE {key}='{value}'";
@@ -252,6 +262,15 @@ namespace kpssOrganizerServer_TEST
             return result;
         }
 
+        static bool CheckExists(string tableName, string key, string value)
+        {
+            string query = $"SELECT * FROM {tableName} WHERE {key}='{value}'";
+            command = new SQLiteCommand(query, connection);
+
+            SQLiteDataReader reader = command.ExecuteReader();
+            if (reader.HasRows) return true;
+            else return false;
+        }
         public static Dictionary<string, string> GetSessionDictionary()
         {
             Dictionary<string, string> temp = new Dictionary<string, string>();
@@ -266,7 +285,6 @@ namespace kpssOrganizerServer_TEST
             return temp;
 
         }
-
         public static void BanAccount(string key, string value, string banReason)
         {
             string getQuery = $"SELECT * FROM Accounts WHERE {key}='{value}'";
@@ -290,7 +308,6 @@ namespace kpssOrganizerServer_TEST
                 Console.WriteLine(reader["username"] + " UNDER BAN");
             }
         }
-
         public static void UnbanAccount(string key, string value)
         {
             string query = $"DELETE FROM BannedAccounts WHERE {key}='{value}'";
@@ -298,7 +315,6 @@ namespace kpssOrganizerServer_TEST
 
             Console.WriteLine($"Unbanned {command.ExecuteNonQuery()} account");
         }
-
         public static bool CheckAccountBan(string accId)
         {
             string query = "SELECT * FROM BannedAccounts WHERE account_id=" + accId;
@@ -312,7 +328,6 @@ namespace kpssOrganizerServer_TEST
             return false;
 
         }
-
         static string GetAccountBanInfo(string accId)
         {
             string query = "SELECT reason, date FROM BannedAccounts WHERE account_id=" + accId;
@@ -323,6 +338,34 @@ namespace kpssOrganizerServer_TEST
             while (reader.Read()) result = $"{reader["reason"]}&{reader["date"]}";
             
             return result;
+        }
+
+        public static ResponsePacket CreateGroup(string login, string pass, string leaderID)
+        {
+            ResponsePacket packet = new ResponsePacket();
+            if(CheckExists("Groups", "login", login))
+            {
+                packet.Code = ResponseCode.GroupCreate_Fail_LoginExists;
+                return packet;
+            }
+            else
+            {
+                string query = $"INSERT INTO Groups(login, password, leader_id) VALUES('{login}', '{pass}', {leaderID})";
+                command = new SQLiteCommand(query, connection);
+
+                try
+                {
+                    command.ExecuteNonQuery();
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    packet.Code = ResponseCode.GroupCreate_Fail_Unknown;
+                    return packet;
+                }
+                packet.Code = ResponseCode.GroupCreate_Success;
+                return packet;
+            }
         }
     }
 }

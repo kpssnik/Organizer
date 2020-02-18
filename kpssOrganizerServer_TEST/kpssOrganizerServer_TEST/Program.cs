@@ -14,8 +14,9 @@ namespace kpssOrganizerServer_TEST
             Server server = new Server();
             server.DoListen((int)Port.Server_LoginRegister);
             server.DoListen((int)Port.Server_SessionCheck);
+            server.DoListen((int)Port.Server_MainReceiver);
 
-            DBManager.BanAccount("username", "ggwpFCVP", "pidoras");
+            //DBManager.BanAccount("username", "ggwpFCVP", "pidoras");
         }
 
 
@@ -82,6 +83,17 @@ namespace kpssOrganizerServer_TEST
                     Console.WriteLine(packetInfo[1] + " session continued.\n");
 
                     break;
+
+                case (int)PacketType.GroupCreate:
+                    Console.WriteLine("INCOMING GROUP CREATE PACKET");
+                    Console.WriteLine($"{packetInfo[1]}\t{packetInfo[2]}\t{packetInfo[3]}");
+
+                    ResponsePacket groupCreateResponsePacket = DBManager.CreateGroup(packetInfo[1], packetInfo[2], onlineUsers[packetInfo[3]]);
+                    Console.WriteLine($"PACKET___________\t" + $"{groupCreateResponsePacket.Code}({(int)groupCreateResponsePacket.Code})");
+                    SendResponse(groupCreateResponsePacket, packetInfo[4]);
+
+                    break;
+
             }
         }
 

@@ -126,6 +126,40 @@ namespace KpssOrganizer
             Console.WriteLine("Started holding");
         }
 
+        public ResponseCode CreateGroup(string login, string password = "")
+        {
+            GroupCreatePacket packet = new GroupCreatePacket()
+            {
+                Login = login,
+                Password = password,
+                SessionID = sessionID,
+            };
+
+            UdpClient receiver = new UdpClient((int)Port.Client_ResponseReceive);
+            SendPacket(Crypto.SimEncrypt(packet.BuildPacket()));
+
+            ResponseCode responseCode = GetResponseCode(ReceiveResponse(receiver).Split('%')[1]);
+            receiver.Close();
+
+            return responseCode;
+            //ResponseCode code = GetResponseCode(ReceiveResponse(receiver));
+       
+
+            //switch (code) 
+            //{
+            //    case ResponseCode.GroupCreate_Success:
+            //        Console.WriteLine("success group");
+            //        break;
+            //    case ResponseCode.GroupCreate_Fail_LoginExists:
+            //        Console.WriteLine("fail group login exists");
+            //        break;
+            //    case ResponseCode.GroupCreate_Fail_Unknown:
+            //        Console.WriteLine("fail group unknown");
+            //        break;
+            //}
+
+        }
+
         public ResponseCode GetResponseCode(string str)
         {
             return (ResponseCode)int.Parse(str);
