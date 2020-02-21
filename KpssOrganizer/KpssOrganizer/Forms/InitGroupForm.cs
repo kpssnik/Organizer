@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace KpssOrganizer.Forms
 {
-    public partial class CreateGroupForm : Form
+    public partial class InitGroupForm : Form
     {
-        public CreateGroupForm()
+        public InitGroupForm()
         {
             InitializeComponent();
         }

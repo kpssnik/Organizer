@@ -66,7 +66,6 @@ namespace kpssOrganizerServer_TEST
                     ResponsePacket loginResponsePacket = DBManager.LoginAccount(packetInfo[1], packetInfo[2], packetInfo[3]);
                     Console.WriteLine("TUT: " + loginResponsePacket.Code);
                     SendResponse(loginResponsePacket, packetInfo[3]);                  
-
                     break;
 
                 case (int)PacketType.Register:
@@ -75,13 +74,11 @@ namespace kpssOrganizerServer_TEST
 
                     ResponsePacket registerResponsePacket = DBManager.RegisterAccount(packetInfo[1], packetInfo[2], packetInfo[3], packetInfo[4]);
                     SendResponse(registerResponsePacket, packetInfo[4]);
-
                     break;
 
                 case (int)PacketType.SessionContinue:
                     ContinueSession(packetInfo[1]);
                     Console.WriteLine(packetInfo[1] + " session continued.\n");
-
                     break;
 
                 case (int)PacketType.GroupCreate:
@@ -91,7 +88,23 @@ namespace kpssOrganizerServer_TEST
                     ResponsePacket groupCreateResponsePacket = DBManager.CreateGroup(packetInfo[1], packetInfo[2], onlineUsers[packetInfo[3]]);
                     Console.WriteLine($"PACKET___________\t" + $"{groupCreateResponsePacket.Code}({(int)groupCreateResponsePacket.Code})");
                     SendResponse(groupCreateResponsePacket, packetInfo[4]);
+                    break;
 
+                case (int)PacketType.GroupJoin:
+                    Console.WriteLine("INCOMING GROUP JOIN PACKET");
+                    Console.WriteLine($"{packetInfo[1]}\t{packetInfo[2]}\t{packetInfo[3]}");
+
+                    ResponsePacket groupJoinResponsePacket = DBManager.JoinGroup(packetInfo[1], packetInfo[2], onlineUsers[packetInfo[3]]);
+                    SendResponse(groupJoinResponsePacket, packetInfo[4]);
+                    break;
+
+                case (int)PacketType.GetGroupsList:
+                    Console.WriteLine("INCOMING GET GROUPS PACKET");
+                    Console.WriteLine($"{packetInfo[1]}\t{packetInfo[2]}");
+
+                    ResponsePacket groupsListPacket = DBManager.GetAccountGroups(onlineUsers[packetInfo[1]]);
+                    Console.WriteLine("\t\tSENDING RESPONSE: " + groupsListPacket.Extra);
+                    SendResponse(groupsListPacket, packetInfo[2]);
                     break;
 
             }

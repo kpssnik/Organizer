@@ -15,7 +15,9 @@ namespace KpssOrganizer.Engine
         Message,
         Response,
         SessionContinue,
-        GroupCreate
+        GroupCreate,
+        GroupJoin,
+        GetGroupsList
     }
     public enum ResponseCode
     {
@@ -30,11 +32,15 @@ namespace KpssOrganizer.Engine
         Login_Fail_SessionAlreadyExists = 203,
         Login_Fail_AccoundBanned = 204,
 
-        ERROR_Invalid_Packet_Income = 300,
-
         GroupCreate_Success = 400,
         GroupCreate_Fail_Unknown = 401,
-        GroupCreate_Fail_LoginExists = 402
+        GroupCreate_Fail_LoginExists = 402,
+
+        GroupJoin_Success = 500,
+        GroupJoin_Fail_Unknown = 501,
+        GroupJoin_Fail_IncorrectData = 502,
+        GroupJoin_Fail_AccountBanned = 503,
+        GroupJoin_Fail_AlreadyJoined = 504
     }
 
     public enum Port
@@ -136,6 +142,52 @@ namespace KpssOrganizer.Engine
         public string BuildPacket()
         {
             return $"{(int)Type}%{Login}%{Password}%{SessionID}%{internalIP}";
+        }
+    }
+
+    class GroupJoinPacket:IPacket
+    {
+        public PacketType Type { get { return PacketType.GroupJoin; } }
+        public string Login { get; set; }
+        public string Password { get; set; }
+        public string SessionID { get; set; }
+        string internalIP
+        {
+            get
+            {
+                var host = Dns.GetHostEntry(Dns.GetHostName());
+                var result = from a in host.AddressList
+                             where a.AddressFamily == AddressFamily.InterNetwork && a.ToString().Contains("192.168.1")
+                             select a.ToString();
+
+                return result.LastOrDefault();
+            }
+        }
+        public string BuildPacket()
+        {
+            return $"{(int)Type}%{Login}%{Password}%{SessionID}%{internalIP}";
+        }
+    }
+
+    class GetGroupsListPacket:IPacket
+    {
+        public PacketType Type { get { return PacketType.GetGroupsList; } }
+        public string SessionID { get; set; }
+        string internalIP
+        {
+            get
+            {
+                var host = Dns.GetHostEntry(Dns.GetHostName());
+                var result = from a in host.AddressList
+                             where a.AddressFamily == AddressFamily.InterNetwork && a.ToString().Contains("192.168.1")
+                             select a.ToString();
+
+                return result.LastOrDefault();
+            }
+        }
+        public string BuildPacket()
+        {
+            return $"{(int)Type}%{SessionID}%{internalIP}";
         }
     }
 }

@@ -349,15 +349,28 @@ namespace kpssOrganizerServer_TEST
                 return packet;
             }
             else
-            {
-                string query = $"INSERT INTO Groups(login, password, leader_id) VALUES('{login}', '{pass}', {leaderID})";
-                command = new SQLiteCommand(query, connection);
-
+            {             
                 try
                 {
+                    string query = $"INSERT INTO Groups(login, password, leader_id) VALUES('{login}', '{pass}', {leaderID})";
+                    command = new SQLiteCommand(query, connection);
+                    command.ExecuteNonQuery();
+
+                    query = $"SELECT id FROM Groups WHERE login='{login}' AND leader_id={leaderID}";
+                    command = new SQLiteCommand(query, connection);
+                    SQLiteDataReader reader = command.ExecuteReader();
+
+                    int groupID = 0;
+                    while (reader.Read())
+                    {
+                        groupID = reader.GetInt32(0);
+                    }
+
+                    query = $"INSERT INTO GroupMembers(group_id, account_id) VALUES({groupID}, {leaderID})";
+                    command = new SQLiteCommand(query, connection);
                     command.ExecuteNonQuery();
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                     packet.Code = ResponseCode.GroupCreate_Fail_Unknown;
@@ -366,6 +379,88 @@ namespace kpssOrganizerServer_TEST
                 packet.Code = ResponseCode.GroupCreate_Success;
                 return packet;
             }
+        }
+        public static ResponsePacket JoinGroup(string login, string pass, string acc_id)
+        {
+            ResponsePacket packet = new ResponsePacket();
+            string query = $"SELECT id FROM Groups WHERE login='{login}' AND password='{pass}'";
+            command = new SQLiteCommand(query, connection);
+
+            SQLiteDataReader reader = command.ExecuteReader();
+            if (!reader.HasRows)
+            {
+                packet.Code = ResponseCode.GroupJoin_Fail_IncorrectData;
+                return packet;
+            }
+            else
+            {
+                
+                while (reader.Read())
+                {
+                    query = $"SELECT * FROM GroupMembers WHERE group_id={reader.GetInt32(0)} AND account_id={acc_id}";
+                    command = new SQLiteCommand(query, connection);
+                    SQLiteDataReader reader2 = command.ExecuteReader();
+                    while (reader2.Read())
+                    {
+                        if (reader2.HasRows)
+                        {
+                            packet.Code = ResponseCode.GroupJoin_Fail_AlreadyJoined;
+                            return packet;
+                        }
+                    }
+
+                    query = $"INSERT INTO GroupMembers(group_id, account_id) VALUES({reader.GetInt32(0)}, {acc_id})";
+                    command = new SQLiteCommand(query, connection);
+                    if(command.ExecuteNonQuery() == 1) packet.Code = ResponseCode.GroupJoin_Success;
+                }
+            }
+            return packet;
+        }
+
+        public static ResponsePacket GetAccountGroups(string acc_id)
+        {
+            ResponsePacket packet = new ResponsePacket();
+            packet.Code = ResponseCode.Default;
+
+            List<int> groupIds = new List<int>();
+            string query = $"SELECT group_id FROM GroupMembers WHERE account_id={acc_id}";
+            command = new SQLiteCommand(query, connection);
+
+            SQLiteDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                groupIds.Add(reader.GetInt32(0));
+            }
+            Console.WriteLine(groupIds.Count);
+
+            query = "SELECT login FROM Groups WHERE ";
+            for(int i = 0; i < groupIds.Count; i++)
+            {
+                if (i == groupIds.Count - 1) query += $"id={groupIds[i]}";
+                else query += $"id={groupIds[i]} OR ";
+            }
+            Console.WriteLine(query);
+
+            try
+            {
+                 command = new SQLiteCommand(query, connection);
+                 reader = command.ExecuteReader();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                packet.Extra = "";
+                return packet;
+            }
+
+            while (reader.Read())
+            {
+                packet.Extra += reader.GetString(0)+"&";
+            }
+            packet.Extra.Trim('&');
+            Console.WriteLine("EXTRA: " + packet.Extra);
+
+            return packet;
         }
     }
 }

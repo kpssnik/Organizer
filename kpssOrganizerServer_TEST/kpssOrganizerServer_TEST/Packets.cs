@@ -11,10 +11,14 @@ namespace kpssOrganizerServer_TEST
         Message,
         Response,
         SessionContinue,
-        GroupCreate
+        GroupCreate,
+        GroupJoin,
+        GetGroupsList
     }
     public enum ResponseCode
     {
+        Default = 0,
+
         Register_Success = 100,
         Register_Fail_Unknown = 101,
         Register_Fail_UsernameExists = 102,
@@ -28,7 +32,15 @@ namespace kpssOrganizerServer_TEST
 
         GroupCreate_Success = 400,
         GroupCreate_Fail_Unknown = 401,
-        GroupCreate_Fail_LoginExists = 402
+        GroupCreate_Fail_LoginExists = 402,
+
+        GroupJoin_Success = 500,
+        GroupJoin_Fail_Unknown = 501,
+        GroupJoin_Fail_IncorrectData = 502,
+        GroupJoin_Fail_AccountBanned = 503,
+        GroupJoin_Fail_AlreadyJoined = 504,
+
+        
     }
     public enum Port
     {

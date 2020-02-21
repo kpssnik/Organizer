@@ -1,6 +1,6 @@
 ﻿namespace KpssOrganizer.Forms
 {
-    partial class CreateGroupForm
+    partial class InitGroupForm
     {
         /// <summary>
         /// Required designer variable.
@@ -57,7 +57,7 @@
             this.createButton.Name = "createButton";
             this.createButton.Size = new System.Drawing.Size(119, 23);
             this.createButton.TabIndex = 2;
-            this.createButton.Text = "CREATE";
+            this.createButton.Text = "GO";
             this.createButton.UseVisualStyleBackColor = true;
             // 
             // cancelButton
@@ -88,7 +88,7 @@
             this.label2.TabIndex = 5;
             this.label2.Text = "GROUP PASS";
             // 
-            // CreateGroupForm
+            // InitGroupForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -99,8 +99,8 @@
             this.Controls.Add(this.createButton);
             this.Controls.Add(this.groupPasswordTextBox);
             this.Controls.Add(this.groupLoginTextBox);
-            this.Name = "CreateGroupForm";
-            this.Text = "CreateGroupForm";
+            this.Name = "InitGroupForm";
+            this.Text = "Group";
             this.Load += new System.EventHandler(this.CreateGroupForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

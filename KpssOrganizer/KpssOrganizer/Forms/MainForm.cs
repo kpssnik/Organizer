@@ -26,16 +26,17 @@ namespace KpssOrganizer.Forms
         }
 
         private void MainForm_Load(object sender, EventArgs e)
-        {         
+        {
             client.Connect((int)Port.Server_LoginRegister);
             client.HoldSession();
 
+            UpdateGroupsList();
         }
 
         private void createGroupButton_Click(object sender, EventArgs e)
         {
             DialogResult dr = new DialogResult();
-            CreateGroupForm cgf = new CreateGroupForm();
+            InitGroupForm cgf = new InitGroupForm();
             dr = cgf.ShowDialog();
 
             CreateGroup(cgf.groupLoginTextBox.Text.Trim(), cgf.groupPasswordTextBox.Text.Trim());
@@ -44,6 +45,35 @@ namespace KpssOrganizer.Forms
         public void CreateGroup(string login, string password)
         {
             MessageBox.Show(client.CreateGroup(login, password).ToString());
+        }
+
+        private void JoinGroupButton_Click(object sender, EventArgs e)
+        {
+            DialogResult dr = new DialogResult();
+            InitGroupForm cgf = new InitGroupForm();
+            dr = cgf.ShowDialog();
+
+            JoinGroup(cgf.groupLoginTextBox.Text.Trim(), cgf.groupPasswordTextBox.Text.Trim());
+        }
+
+        public void JoinGroup(string login, string password)
+        {
+            //MessageBox.Show(client.JoinGroup(login, password).ToString());
+            ResponseCode code = client.JoinGroup(login, password);
+            if (code == ResponseCode.GroupJoin_Success)
+                MessageBox.Show("ok");
+            // UpdateGroupsList();
+            else MessageBox.Show(code.ToString());
+            
+        }
+
+        public void UpdateGroupsList()
+        {
+            List<string> groups = client.GetGroupsList();
+            MessageBox.Show(groups[0]);
+            groupsListBox.Items.Clear();
+
+            foreach (var a in groups) groupsListBox.Items.Add(a);
         }
     }
 }

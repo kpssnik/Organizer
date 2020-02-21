@@ -141,23 +141,44 @@ namespace KpssOrganizer
             ResponseCode responseCode = GetResponseCode(ReceiveResponse(receiver).Split('%')[1]);
             receiver.Close();
 
+            return responseCode;           
+        }
+
+        public ResponseCode JoinGroup(string login, string password = "")
+        {
+            GroupJoinPacket packet = new GroupJoinPacket()
+            {
+                Login = login,
+                Password = password,
+                SessionID = sessionID
+            };
+
+            UdpClient receiver = new UdpClient((int)Port.Client_ResponseReceive);
+            SendPacket(Crypto.SimEncrypt(packet.BuildPacket()));
+
+            ResponseCode responseCode = GetResponseCode(ReceiveResponse(receiver).Split('%')[1]);
+            receiver.Close();
+
             return responseCode;
-            //ResponseCode code = GetResponseCode(ReceiveResponse(receiver));
-       
+        }
 
-            //switch (code) 
-            //{
-            //    case ResponseCode.GroupCreate_Success:
-            //        Console.WriteLine("success group");
-            //        break;
-            //    case ResponseCode.GroupCreate_Fail_LoginExists:
-            //        Console.WriteLine("fail group login exists");
-            //        break;
-            //    case ResponseCode.GroupCreate_Fail_Unknown:
-            //        Console.WriteLine("fail group unknown");
-            //        break;
-            //}
+        public List<string> GetGroupsList()
+        {
+            List<string> temp = new List<string>();
+            GetGroupsListPacket packet = new GetGroupsListPacket()
+            {
+                SessionID = sessionID
+            };
 
+            UdpClient receiver = new UdpClient((int)Port.Client_ResponseReceive);
+            SendPacket(Crypto.SimEncrypt(packet.BuildPacket()));
+
+            string extra = ReceiveResponse(receiver).Split('%')[2].TrimEnd('&');
+            receiver.Close();
+
+            foreach(var a in extra.Split('&')) temp.Add(a);
+           
+            return temp;
         }
 
         public ResponseCode GetResponseCode(string str)

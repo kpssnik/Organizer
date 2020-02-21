@@ -59,11 +59,11 @@
     <Compile Include="Engine\Client.cs" />
     <Compile Include="Engine\Crypto.cs" />
     <Compile Include="Engine\Packet.cs" />
-    <Compile Include="Forms\CreateGroupForm.cs">
+    <Compile Include="Forms\InitGroupForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\CreateGroupForm.Designer.cs">
-      <DependentUpon>CreateGroupForm.cs</DependentUpon>
+    <Compile Include="Forms\InitGroupForm.Designer.cs">
+      <DependentUpon>InitGroupForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\LoginForm.cs">
       <SubType>Form</SubType>
@@ -85,8 +85,8 @@
     <Compile Include="Forms\RegisterForm.Designer.cs">
       <DependentUpon>RegisterForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Forms\CreateGroupForm.resx">
-      <DependentUpon>CreateGroupForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\InitGroupForm.resx">
+      <DependentUpon>InitGroupForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
