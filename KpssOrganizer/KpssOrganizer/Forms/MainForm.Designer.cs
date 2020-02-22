@@ -62,13 +62,13 @@
             // 
             // groupsListBox
             // 
-            this.groupsListBox.Font = new System.Drawing.Font("Arial Narrow", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupsListBox.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.groupsListBox.FormattingEnabled = true;
-            this.groupsListBox.ItemHeight = 23;
+            this.groupsListBox.ItemHeight = 22;
             this.groupsListBox.Location = new System.Drawing.Point(23, 92);
             this.groupsListBox.MultiColumn = true;
             this.groupsListBox.Name = "groupsListBox";
-            this.groupsListBox.Size = new System.Drawing.Size(217, 326);
+            this.groupsListBox.Size = new System.Drawing.Size(217, 312);
             this.groupsListBox.TabIndex = 2;
             this.groupsListBox.SelectedIndexChanged += new System.EventHandler(this.GroupsListBox_SelectedIndexChanged);
             // 

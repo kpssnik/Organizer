@@ -126,7 +126,6 @@ namespace KpssOrganizer
         public void HoldSession()
         {
             sessionKeeper.Start();
-            Console.WriteLine("Started holding");
         }
 
         public ResponseCode CreateGroup(string login, string password = "")

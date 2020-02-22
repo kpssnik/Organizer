@@ -70,7 +70,6 @@ namespace kpssOrganizerServer_TEST
             sb.Append((int)Type + "%" + (int)Code);
             if (Extra != null) sb.Append("%" + Extra);
 
-            Console.WriteLine(sb.ToString());
             return sb.ToString();
         }
     }

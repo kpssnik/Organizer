@@ -82,7 +82,6 @@ namespace KpssOrganizer.Engine
         public string BuildPacket()
         {
             string str = $"{(int)Type}%{Username}%{Email}%{Crypto.ComputeSha256Hash(Password)}%{internalIP}";
-            Console.WriteLine(str);
             return str;
         }
     }
@@ -108,7 +107,6 @@ namespace KpssOrganizer.Engine
         public string BuildPacket()
         {
             string str = $"{(int)Type}%{Email}%{Crypto.ComputeSha256Hash(Password)}%{internalIP}";
-            Console.WriteLine(str);
             return str;
         }
     }

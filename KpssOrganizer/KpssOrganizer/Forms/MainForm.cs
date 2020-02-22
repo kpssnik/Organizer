@@ -23,14 +23,17 @@ namespace KpssOrganizer.Forms
         public MainForm(string sessionID, string login)
         {
             InitializeComponent();
+
             client = new Client();
             client.sessionID = sessionID;
             client.sessionLogin = login;
+
             this.Text = login;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+
             client.Connect((int)Port.Server_LoginRegister);
             client.HoldSession();
 
@@ -49,7 +52,12 @@ namespace KpssOrganizer.Forms
 
         public void CreateGroup(string login, string password)
         {
-            MessageBox.Show(client.CreateGroup(login, password).ToString());
+            ResponseCode code = client.CreateGroup(login, password);
+            if(code == ResponseCode.GroupCreate_Success)
+            {
+                UpdateGroupsList();
+            }
+            else MessageBox.Show(code.ToString());
         }
 
         private void JoinGroupButton_Click(object sender, EventArgs e)
@@ -77,13 +85,12 @@ namespace KpssOrganizer.Forms
         public void UpdateGroupsList()
         {
             List<string> groups = client.GetGroupsList();
-            MessageBox.Show(groups[0]);
             groupsListBox.Items.Clear();
 
             foreach (var a in groups) groupsListBox.Items.Add(a);
         }
 
-      
+
         private void GroupsListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!groupBox.Enabled) groupBox.Enabled = true;
@@ -98,7 +105,7 @@ namespace KpssOrganizer.Forms
 
         private void MonthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
         {
-            if(monthCalendar1.BoldedDates.Contains(monthCalendar1.SelectionStart))
+            if (monthCalendar1.BoldedDates.Contains(monthCalendar1.SelectionStart))
             {
                 // message box(dictionary selectionstart)
                 string date = $"{monthCalendar1.SelectionStart.Day}.{monthCalendar1.SelectionStart.Month}" +
@@ -106,7 +113,7 @@ namespace KpssOrganizer.Forms
                 MessageBox.Show(BoldedDates[date]);
             }
             else
-            {            
+            {
                 DialogResult dr = new DialogResult();
 
                 DateTime dateTime = monthCalendar1.SelectionStart;
@@ -115,7 +122,7 @@ namespace KpssOrganizer.Forms
                 BoldDateForm form = new BoldDateForm(date);
                 dr = form.ShowDialog();
 
-                if(form.DialogResult == DialogResult.OK)
+                if (form.DialogResult == DialogResult.OK)
                 {
                     BoldedDates.Add(date, form.descriptionTextBox.Text);
                     client.SendBoldedDate(date, form.descriptionTextBox.Text, selectedGroup);
@@ -129,12 +136,12 @@ namespace KpssOrganizer.Forms
         {
             if (client.canActive)
             {
-                client.DoWait(5000);
+                client.DoWait(3000);
 
                 string info = client.GetGroupInfo(groupName);
                 GroupInfoUnpacker unpacker = new GroupInfoUnpacker(info);
 
-                if(usersListBox.Items.Count > 0) usersListBox.Items.Clear();
+                if (usersListBox.Items.Count > 0) usersListBox.Items.Clear();
                 usersListBox.Items.AddRange(unpacker.Users.ToArray());
 
                 if (eventsListBox.Items.Count > 0) eventsListBox.Items.Clear();
@@ -142,6 +149,9 @@ namespace KpssOrganizer.Forms
 
                 BoldedDates = unpacker.BoldedDates;
                 InitCalendar(BoldedDates);
+
+                selectedGroup = groupName;
+                groupBox.Text = selectedGroup;
 
             }
             else
@@ -154,7 +164,7 @@ namespace KpssOrganizer.Forms
         {
             if (monthCalendar1.BoldedDates.Length > 0) monthCalendar1.BoldedDates = new DateTime[] { };
             List<DateTime> bolded = new List<DateTime>();
-            foreach(var a in boldedDates)
+            foreach (var a in boldedDates)
             {
                 bolded.Add(DateTime.Parse(a.Key));
             }
