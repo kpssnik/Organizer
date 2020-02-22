@@ -89,6 +89,17 @@ namespace kpssOrganizerServer_TEST
             command.ExecuteNonQuery();
             Console.WriteLine("Created group members table");
 
+            string boldedDatesCreate = @"CREATE TABLE BoldedDates(
+
+    id    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
+	group_id  INTEGER NOT NULL,
+	senderLogin   TEXT NOT NULL,
+	description   TEXT,
+	date  NUMERIC NOT NULL
+); ";
+            command = new SQLiteCommand(boldedDatesCreate, connection);
+            command.ExecuteNonQuery();
+            Console.WriteLine("Created bolded dates table");
             connection.Close();
         }
 
@@ -250,6 +261,13 @@ namespace kpssOrganizerServer_TEST
   
             return ids.Count;
         }
+        public static void ClearSessions()
+        {
+            string query = "DELETE FROM Sessions";
+            command = new SQLiteCommand(query, connection);
+            command.ExecuteNonQuery();
+        }
+
         static string GetField(string tableName, string fieldName, string key, string value)
         {
             string query = $"SELECT {fieldName} FROM {tableName} WHERE {key}='{value}'";
@@ -416,7 +434,7 @@ namespace kpssOrganizerServer_TEST
             }
             return packet;
         }
-
+        
         public static ResponsePacket GetAccountGroups(string acc_id)
         {
             ResponsePacket packet = new ResponsePacket();
@@ -461,6 +479,115 @@ namespace kpssOrganizerServer_TEST
             Console.WriteLine("EXTRA: " + packet.Extra);
 
             return packet;
+        }
+        public static ResponsePacket GetGroupInfo(string acc_id, string groupName)
+        {
+            string users = string.Empty;
+            string boldedDates = string.Empty;
+            string events = string.Empty;
+
+            string groupId = GetField("Groups", "id", "login", groupName);
+
+             
+            string exists = "SELECT account_id FROM GroupMembers WHERE group_id=" + groupId;
+            Console.WriteLine("QUERY: " + exists);
+            command = new SQLiteCommand(exists, connection);
+            SQLiteDataReader reader = command.ExecuteReader();
+            bool ex = false;
+            while (reader.Read())
+            {
+                if (reader.GetInt32(0).ToString() == acc_id) ex = true;
+            }
+            ResponsePacket packet = new ResponsePacket();
+            if(ex)
+            {
+                Console.WriteLine("ExistsExistsExistsExistsExistsExists");
+
+                // Users
+                string query = $"SELECT account_id FROM GroupMembers WHERE group_id={groupId}";
+                command = new SQLiteCommand(query, connection);
+
+                reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                   users += GetField("Accounts", "username", "id", reader.GetInt32(0).ToString()) + "&";
+                }
+                users = users.TrimEnd('&');
+                Console.WriteLine("USERS: " + users);
+
+
+
+
+                // BoldedDates
+
+                query = $"SELECT date, description FROM BoldedDates WHERE group_id={groupId}";
+                command = new SQLiteCommand(query, connection);
+                reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    //login^description^date&login^descr^date&...
+                    boldedDates += $"{reader.GetString(0)}^{reader.GetString(1)}&";
+                }
+                boldedDates = boldedDates.TrimEnd('&');
+                Console.WriteLine("BOLDED DATES: " + boldedDates);
+
+
+
+
+                // Events
+
+                query = $"SELECT event_text FROM GroupEvents WHERE group_id={groupId} ORDER BY id DESC LIMIT 25";
+                command = new SQLiteCommand(query, connection);
+                reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    events += reader.GetString(0) + "&";
+                }
+                events = events.TrimEnd('&');
+                Console.WriteLine("EVENTS: " + events);
+
+
+                packet.Code = ResponseCode.GroupInfo;
+                packet.Extra = $"{users}\n{boldedDates}\n{events}";
+            }
+            else
+            {
+                packet.Code = ResponseCode.GroupInfo;
+                packet.Extra = "";
+            }
+                return packet;
+        }
+
+        public static void BoldDate(string groupName, string login, string date, string description)
+        {
+            Console.WriteLine("GROUP NAME: " + groupName);
+            string groupId = GetField("Groups", "id", "login", groupName);
+            Console.WriteLine("GROUP ID: " + groupId);
+
+
+            string query = "INSERT INTO BoldedDates(group_id, senderLogin, description, date) VALUES" +
+                $"({groupId}, '{login}', '{description}', '{date}')";
+            Console.WriteLine("BOLD DATE QUERY: " + query);
+
+            
+            command = new SQLiteCommand(query, connection);
+            if(command.ExecuteNonQuery() > 0)
+            {
+                query = "INSERT INTO GroupEvents(group_id, event_text, date) VALUES" +
+                    $"({groupId}, '{login} bolded {date}. Description: {description}', '{DateTime.Now.ToString()}')";
+
+                command = new SQLiteCommand(query, connection);
+                command.ExecuteNonQuery();
+            }
+
+            
+        }
+
+        public static void DeleteBoldedDate(string groupName, string date)
+        {
+
         }
     }
 }

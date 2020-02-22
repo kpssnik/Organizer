@@ -11,7 +11,7 @@ using KpssOrganizer.Engine;
 
 namespace KpssOrganizer
 {
-    class Client
+    class Client:IDisposable
     {
         UdpClient client = new UdpClient();
 
@@ -19,11 +19,32 @@ namespace KpssOrganizer
         public string sessionID = string.Empty;
         public string responseString = string.Empty;
 
+        Thread sessionKeeper;
+
+        public bool canActive = true;
+
         private string serverIp = "127.0.0.1";
 
         public Client()
         {
+            sessionKeeper = new Thread(() =>
+            {
+                using (UdpClient sender = new UdpClient(serverIp, (int)Port.Server_SessionCheck))
+                {
+                    while (true)
+                    {
+                        Thread.Sleep(20000);
+                        SessionContinuePacket packet = new SessionContinuePacket()
+                        {
+                            SessionID = sessionID
+                        };
+                        Console.WriteLine(Crypto.SimEncrypt(packet.BuildPacket()));
+                        byte[] data = Crypto.SimEncrypt(packet.BuildPacket());
 
+                        sender.Send(data, data.Length);
+                    }
+                }
+            });
         }
         public void Connect(int port)
         {
@@ -104,24 +125,6 @@ namespace KpssOrganizer
 
         public void HoldSession()
         {
-            Thread sessionKeeper = new Thread(() =>
-            {
-                using (UdpClient sender = new UdpClient(serverIp, (int)Port.Server_SessionCheck))
-                {
-                    while (true)
-                    {
-                        Thread.Sleep(20000);
-                        SessionContinuePacket packet = new SessionContinuePacket()
-                        {
-                            SessionID = sessionID
-                        };
-                        Console.WriteLine(Crypto.SimEncrypt(packet.BuildPacket()));
-                        byte[] data = Crypto.SimEncrypt(packet.BuildPacket());
-
-                        sender.Send(data, data.Length);
-                    }
-                }
-            });
             sessionKeeper.Start();
             Console.WriteLine("Started holding");
         }
@@ -181,6 +184,51 @@ namespace KpssOrganizer
             return temp;
         }
 
+        public string GetGroupInfo(string groupName)
+        {
+            GetGroupInfoPacket packet = new GetGroupInfoPacket()
+            {
+                SessionID = sessionID,
+                GroupName = groupName
+            };
+
+            UdpClient receiver = new UdpClient((int)Port.Client_ResponseReceive);
+            SendPacket(Crypto.SimEncrypt(packet.BuildPacket()));
+
+            string response = ReceiveResponse(receiver).Split('%')[2];
+            //string users = response.Split('%')[2].TrimEnd('&');
+
+            receiver.Close();
+
+            return response;
+        }
+
+        public void DoWait(int ms)
+        {
+            new Thread(() =>
+            {
+                canActive = false;
+                Thread.Sleep(ms);
+                canActive = true;
+            }).Start();
+        }
+
+        public void SendBoldedDate(string date, string description, string groupName)
+        {
+            BoldDatePacket packet = new BoldDatePacket()
+            {
+                Date = date,
+                Description = description,
+                GroupName = groupName,
+                Login = sessionLogin,
+            };
+
+            UdpClient receiver = new UdpClient((int)Port.Client_ResponseReceive);
+            SendPacket(Crypto.SimEncrypt(packet.BuildPacket()));
+            receiver.Close();
+        }
+
+
         public ResponseCode GetResponseCode(string str)
         {
             return (ResponseCode)int.Parse(str);
@@ -190,5 +238,9 @@ namespace KpssOrganizer
             return (PacketType)int.Parse(str);
         }
 
+        public void Dispose()
+        {
+            sessionKeeper.Abort();
+        }
     }
 }

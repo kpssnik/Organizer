@@ -13,11 +13,14 @@ namespace kpssOrganizerServer_TEST
         SessionContinue,
         GroupCreate,
         GroupJoin,
-        GetGroupsList
+        GetGroupsList,
+        GetGroupInfo,
+        BoldDate
     }
     public enum ResponseCode
     {
         Default = 0,
+        GroupInfo = 1,
 
         Register_Success = 100,
         Register_Fail_Unknown = 101,
@@ -67,6 +70,7 @@ namespace kpssOrganizerServer_TEST
             sb.Append((int)Type + "%" + (int)Code);
             if (Extra != null) sb.Append("%" + Extra);
 
+            Console.WriteLine(sb.ToString());
             return sb.ToString();
         }
     }

@@ -17,7 +17,9 @@ namespace KpssOrganizer.Engine
         SessionContinue,
         GroupCreate,
         GroupJoin,
-        GetGroupsList
+        GetGroupsList,
+        GetGroupInfo,
+        BoldDate
     }
     public enum ResponseCode
     {
@@ -188,6 +190,43 @@ namespace KpssOrganizer.Engine
         public string BuildPacket()
         {
             return $"{(int)Type}%{SessionID}%{internalIP}";
+        }
+    }
+
+    class GetGroupInfoPacket : IPacket
+    {
+        public PacketType Type { get { return PacketType.GetGroupInfo; } }
+        public string SessionID { get; set; }
+        string internalIP
+        {
+            get
+            {
+                var host = Dns.GetHostEntry(Dns.GetHostName());
+                var result = from a in host.AddressList
+                             where a.AddressFamily == AddressFamily.InterNetwork && a.ToString().Contains("192.168.1")
+                             select a.ToString();
+
+                return result.LastOrDefault();
+            }
+        }
+
+        public string GroupName { get; set; }
+        public string BuildPacket()
+        {
+            return $"{(int)Type}%{GroupName}%{SessionID}%{internalIP}";
+        }
+    }
+
+    class BoldDatePacket : IPacket
+    {
+        public PacketType Type { get { return PacketType.BoldDate; } }
+        public string GroupName { get; set; }
+        public string Login { get; set; }
+        public string Date { get; set; }
+        public string Description { get; set; }
+        public string BuildPacket()
+        {
+            return $"{(int)Type}%{GroupName}%{Login}%{Date}%{Description}";
         }
     }
 }

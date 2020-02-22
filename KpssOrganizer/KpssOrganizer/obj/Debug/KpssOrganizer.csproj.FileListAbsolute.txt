@@ -42,3 +42,4 @@ F:\.NET Projects\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.c
 F:\.NET Projects\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.exe
 F:\.NET Projects\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.pdb
 F:\.NET Projects\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.Forms.InitGroupForm.resources
+F:\.NET Projects\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.Forms.BoldDateForm.resources

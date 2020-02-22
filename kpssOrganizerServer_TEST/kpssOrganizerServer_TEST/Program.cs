@@ -32,6 +32,7 @@ namespace kpssOrganizerServer_TEST
         {
             DBManager.Connect(dbPath);
             DoCheckSessions();
+            DBManager.ClearSessions();
         }
 
         public void DoListen(int port)
@@ -57,9 +58,9 @@ namespace kpssOrganizerServer_TEST
         {
             string[] packetInfo = packet.ToString().Split('%');
 
-            switch (int.Parse(packetInfo[0]))
+            switch (GetPacketType(packetInfo[0]))
             {
-                case (int)PacketType.Login:
+                case PacketType.Login:
                     Console.WriteLine("\nINCOMING LOGIN PACKET");
                     Console.WriteLine($"Email: {packetInfo[1]}\nPass: {packetInfo[2]}\nIP: {packetInfo[3]}\n\n");
 
@@ -68,7 +69,7 @@ namespace kpssOrganizerServer_TEST
                     SendResponse(loginResponsePacket, packetInfo[3]);                  
                     break;
 
-                case (int)PacketType.Register:
+                case PacketType.Register:
                     Console.WriteLine("\nINCOMING REGISTER PACKET");
                     Console.WriteLine($"Username: {packetInfo[1]}\nEmail: {packetInfo[2]}\nPass: {packetInfo[3]}\nIP: {packetInfo[4]}\n\n");
 
@@ -76,12 +77,12 @@ namespace kpssOrganizerServer_TEST
                     SendResponse(registerResponsePacket, packetInfo[4]);
                     break;
 
-                case (int)PacketType.SessionContinue:
+                case PacketType.SessionContinue:
                     ContinueSession(packetInfo[1]);
                     Console.WriteLine(packetInfo[1] + " session continued.\n");
                     break;
 
-                case (int)PacketType.GroupCreate:
+                case PacketType.GroupCreate:
                     Console.WriteLine("INCOMING GROUP CREATE PACKET");
                     Console.WriteLine($"{packetInfo[1]}\t{packetInfo[2]}\t{packetInfo[3]}");
 
@@ -90,7 +91,7 @@ namespace kpssOrganizerServer_TEST
                     SendResponse(groupCreateResponsePacket, packetInfo[4]);
                     break;
 
-                case (int)PacketType.GroupJoin:
+                case PacketType.GroupJoin:
                     Console.WriteLine("INCOMING GROUP JOIN PACKET");
                     Console.WriteLine($"{packetInfo[1]}\t{packetInfo[2]}\t{packetInfo[3]}");
 
@@ -98,7 +99,7 @@ namespace kpssOrganizerServer_TEST
                     SendResponse(groupJoinResponsePacket, packetInfo[4]);
                     break;
 
-                case (int)PacketType.GetGroupsList:
+                case PacketType.GetGroupsList:
                     Console.WriteLine("INCOMING GET GROUPS PACKET");
                     Console.WriteLine($"{packetInfo[1]}\t{packetInfo[2]}");
 
@@ -107,6 +108,20 @@ namespace kpssOrganizerServer_TEST
                     SendResponse(groupsListPacket, packetInfo[2]);
                     break;
 
+                case PacketType.GetGroupInfo:
+                    Console.WriteLine("INCOMING GET GROUP INFO PACKET");
+                    Console.WriteLine($"{packetInfo[1]}\t{packetInfo[2]}\t{packetInfo[3]}");
+
+                    ResponsePacket groupInfoPacket = DBManager.GetGroupInfo(onlineUsers[packetInfo[2]], packetInfo[1]);
+                    SendResponse(groupInfoPacket, packetInfo[3]);
+                    break;
+
+                case PacketType.BoldDate:
+                    Console.WriteLine("INCOMING BOLD DATE PACKET");
+                    Console.WriteLine($"{packetInfo[1]}\t{packetInfo[2]}\t{packetInfo[3]}\t{packetInfo[4]}");
+
+                    DBManager.BoldDate(packetInfo[1], packetInfo[2], packetInfo[3], packetInfo[4]);
+                    break;
             }
         }
 
@@ -147,8 +162,11 @@ namespace kpssOrganizerServer_TEST
             if(deadSessionIds.Contains(sessionID)) deadSessionIds.Remove(sessionID);
         }
 
-       
-        
+        private PacketType GetPacketType(string str)
+        {
+            return (PacketType)int.Parse(str);
+        }
+
     }
 
 
