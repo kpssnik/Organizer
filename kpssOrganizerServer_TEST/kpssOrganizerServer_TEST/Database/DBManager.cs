@@ -40,7 +40,7 @@ namespace kpssOrganizerServer_TEST
 	username	TEXT NOT NULL UNIQUE,
 	email	TEXT NOT NULL UNIQUE,
 	password	TEXT NOT NULL,
-	reg_date	NUMERIC NOT NULL,
+	reg_date	TEXT NOT NULL,
 	reg_ip	TEXT
 );";
             command = new SQLiteCommand(accountsCreate, connection);
@@ -50,7 +50,7 @@ namespace kpssOrganizerServer_TEST
             string sessionsCreate = @"CREATE TABLE Sessions (
 	id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
 	account_id	INTEGER NOT NULL UNIQUE,
-	login_time	NUMERIC NOT NULL,
+	login_time	TEXT NOT NULL,
 	FOREIGN KEY(account_id) REFERENCES Accounts(id)
 );";
             command = new SQLiteCommand(sessionsCreate, connection);
@@ -61,7 +61,7 @@ namespace kpssOrganizerServer_TEST
 	id	INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
 	account_id	INTEGER NOT NULL UNIQUE,
 	reason	TEXT,
-	date	NUMERIC NOT NULL
+	date	TEXT NOT NULL
 )";
             command = new SQLiteCommand(bannedAccountsCreate, connection);
             command.ExecuteNonQuery();
@@ -96,7 +96,7 @@ namespace kpssOrganizerServer_TEST
 	group_id  INTEGER NOT NULL,
 	senderLogin   TEXT NOT NULL,
 	description   TEXT,
-	date  NUMERIC NOT NULL
+	date  TEXT NOT NULL
 ); ";
             command = new SQLiteCommand(boldedDatesCreate, connection);
             command.ExecuteNonQuery();
@@ -107,7 +107,7 @@ namespace kpssOrganizerServer_TEST
     id    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
 	group_id  INTEGER NOT NULL,
 	event_text    TEXT NOT NULL,
-	date  NUMERIC NOT NULL,
+	date  TEXT NOT NULL,
 	FOREIGN KEY(group_id) REFERENCES Groups(id)
 ); ";
             command = new SQLiteCommand(groupEventsCreate, connection);
@@ -131,11 +131,41 @@ namespace kpssOrganizerServer_TEST
             }
         }
 
+        public static void PrintBanInfo(string key, string value)
+        {
+            string query = $"SELECT * FROM BannedAccounts WHERE {key}='{value}'";
+            command = new SQLiteCommand(query, connection);
+
+            SQLiteDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Server.PrintMessage($"ID: {reader["id"]} \nAccount id: {reader["account_id"]} \nReason: {reader["reason"]} \nDate: " +
+                    $"{reader["date"]}\n\n", ConsoleColor.White);
+            }
+        }
+
+        public static void PrintGroup(string key, string value)
+        {
+            string query = $"SELECT * FROM Groups WHERE {key}='{value}'";
+            command = new SQLiteCommand(query, connection);
+
+            SQLiteDataReader reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Server.PrintMessage($"ID: {reader["id"]} \nLogin: {reader["login"]} \nPassword: {reader["password"]} \nLeader id: " +
+                    $"{reader["leader_id"]}\n\n", ConsoleColor.White);
+            }
+        }
+
+        
+
         public static ResponsePacket RegisterAccount(string username, string email, string pass, string ip)
         {
             ResponsePacket packet = new ResponsePacket();
             string query = "INSERT INTO Accounts(username, email, password, reg_date, reg_ip) " +
-                $"VALUES ('{username}', '{email}', '{pass}', '{DateTime.Now}', '{ip}')";
+                $"VALUES ('{username}', '{email}', '{pass}', '{DateTime.Now.ToString()}', '{ip}')";
 
             command = new SQLiteCommand(query, connection);
 
@@ -234,7 +264,7 @@ namespace kpssOrganizerServer_TEST
         }
         static int StartSession(string accId, string ip)
         {
-            string query = $"INSERT INTO Sessions(account_id, login_time) VALUES({accId}, '{DateTime.Now}')";
+            string query = $"INSERT INTO Sessions(account_id, login_time) VALUES({accId}, '{DateTime.Now.ToString()}')";
             command = new SQLiteCommand(query, connection);
 
             try
@@ -387,7 +417,7 @@ namespace kpssOrganizerServer_TEST
             while (reader.Read())
             {
                 string query = "INSERT INTO BannedAccounts(account_id, reason, date) " +
-                    $"VALUES({reader["id"].ToString()}, '{banReason}', '{DateTime.Now}')";
+                    $"VALUES({reader["id"].ToString()}, '{banReason}', '{DateTime.Now.ToString()}')";
                 try
                 {
                     command = new SQLiteCommand(query, connection);
@@ -701,8 +731,26 @@ namespace kpssOrganizerServer_TEST
 
         }
 
-        public static void DeleteBoldedDate(string groupName, string date)
+        public static void DeleteBoldedDate(string groupName, string date, string login)
         {
+            string groupId = GetField("Groups", "id", "login", groupName);
+
+            string query = $"DELETE FROM BoldedDates WHERE group_id={groupId} AND date='{date}'";
+            string query2 = $"INSERT INTO GroupEvents(group_id, event_text, date) VALUES({groupId}, '{login} deleted " +
+                $"{date}', '{DateTime.Now.ToString()}')";
+
+            command = new SQLiteCommand(query, connection);
+            try
+            {
+                command.ExecuteNonQuery();
+                command = new SQLiteCommand(query2, connection);
+                command.ExecuteNonQuery();
+            }
+            catch(Exception ex)
+            {
+                Server.PrintMessage($"ERROR DELETING BOLDED DATE ({date} from {groupName})\n{ex.Message}", ConsoleColor.Red);
+            }
+
 
         }
     }

@@ -66,6 +66,12 @@
     <Compile Include="Forms\BoldDateForm.Designer.cs">
       <DependentUpon>BoldDateForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\BoldedDateForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\BoldedDateForm.Designer.cs">
+      <DependentUpon>BoldedDateForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\InitGroupForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,6 +100,9 @@
     </Compile>
     <EmbeddedResource Include="Forms\BoldDateForm.resx">
       <DependentUpon>BoldDateForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BoldedDateForm.resx">
+      <DependentUpon>BoldedDateForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\InitGroupForm.resx">
       <DependentUpon>InitGroupForm.cs</DependentUpon>

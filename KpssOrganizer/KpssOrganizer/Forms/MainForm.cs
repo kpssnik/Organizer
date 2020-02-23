@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 using KpssOrganizer.Engine;
+using System.Threading;
 
 namespace KpssOrganizer.Forms
 {
@@ -53,7 +54,7 @@ namespace KpssOrganizer.Forms
         public void CreateGroup(string login, string password)
         {
             ResponseCode code = client.CreateGroup(login, password);
-            if(code == ResponseCode.GroupCreate_Success)
+            if (code == ResponseCode.GroupCreate_Success)
             {
                 UpdateGroupsList();
             }
@@ -107,10 +108,20 @@ namespace KpssOrganizer.Forms
         {
             if (monthCalendar1.BoldedDates.Contains(monthCalendar1.SelectionStart))
             {
-                // message box(dictionary selectionstart)
                 string date = $"{monthCalendar1.SelectionStart.Day}.{monthCalendar1.SelectionStart.Month}" +
                     $".{monthCalendar1.SelectionStart.Year}";
-                MessageBox.Show(BoldedDates[date]);
+
+                BoldedDateForm form = new BoldedDateForm(date, BoldedDates[date]);
+                DialogResult dr = new DialogResult();
+
+                dr = form.ShowDialog();
+
+                if (form.DialogResult == DialogResult.Abort)
+                {
+                    client.DeleteBoldedDate(date, selectedGroup);
+                    Thread.Sleep(50);
+                    UpdateGroupInfo(selectedGroup);
+                }
             }
             else
             {
@@ -124,11 +135,10 @@ namespace KpssOrganizer.Forms
 
                 if (form.DialogResult == DialogResult.OK)
                 {
-                    BoldedDates.Add(date, form.descriptionTextBox.Text);
                     client.SendBoldedDate(date, form.descriptionTextBox.Text, selectedGroup);
+                    UpdateGroupInfo(selectedGroup);
                 }
 
-                InitCalendar(BoldedDates);
             }
         }
 
@@ -148,7 +158,6 @@ namespace KpssOrganizer.Forms
                 eventsListBox.Items.AddRange(unpacker.Events.ToArray());
 
                 BoldedDates = unpacker.BoldedDates;
-                InitCalendar(BoldedDates);
 
                 selectedGroup = groupName;
                 groupBox.Text = selectedGroup;
@@ -158,6 +167,8 @@ namespace KpssOrganizer.Forms
             {
                 MessageBox.Show("Not so fast.. Wait.");
             }
+
+            InitCalendar(BoldedDates);
         }
 
         private void InitCalendar(Dictionary<string, string> boldedDates)

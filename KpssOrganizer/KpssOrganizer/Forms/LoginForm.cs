@@ -31,50 +31,67 @@ namespace KpssOrganizer
 
         private void loginButton_Click(object sender, EventArgs e)
         {
-            string email = emailTextBox.Text.Trim();
-            string password = passwordTextBox.Text.Trim();
-
-            ResponseCode response = loginClient.Login(email, password);
-
-            switch (response)
+            if (loginClient.canActive)
             {
-                case ResponseCode.Login_Success:
-                    MessageBox.Show("Welcome, " + loginClient.sessionLogin);
-                    // run main form(loginClient.sessionId);
-                    // close this form
-                    MainForm form = new MainForm(loginClient.sessionID, loginClient.sessionLogin);
-            
-                    form.ShowDialog();
+                loginClient.DoWait(5000);
 
-                    this.Close();
-                    break;
+                string email = emailTextBox.Text.Trim();
+                string password = passwordTextBox.Text.Trim();
 
-                case ResponseCode.Login_Fail_AccoundBanned:
-                    MessageBox.Show(loginClient.responseString);
-                    break;
+                loginButton.Enabled = false;
+                UseWaitCursor = true;
 
-                case ResponseCode.Login_Fail_SessionAlreadyExists:
-                    MessageBox.Show("Session already exists. Unlogin from another client and try again later");
-                    break;
+                ResponseCode response = loginClient.Login(email, password);
 
-                case ResponseCode.Login_Fail_IncorrectData:
-                    MessageBox.Show("Login error. Incorrect email or password");
-                    break;
+                loginButton.Enabled = true;
+                UseWaitCursor = false;
 
-                case ResponseCode.Login_Fail_Unknown:
-                    MessageBox.Show("Unknown error");
-                    break;
+                switch (response)
+                {
+                    case ResponseCode.Login_Success:
+                        MessageBox.Show("Welcome, " + loginClient.sessionLogin);
+                        // run main form(loginClient.sessionId);
+                        // close this form
+                        MainForm form = new MainForm(loginClient.sessionID, loginClient.sessionLogin);
 
-                default:
-                    MessageBox.Show("Admin durak");
-                    break;
+                        form.ShowDialog();
+
+                        this.Close();
+                        break;
+
+                    case ResponseCode.Login_Fail_AccoundBanned:
+                        MessageBox.Show(loginClient.responseString);
+                        break;
+
+                    case ResponseCode.Login_Fail_SessionAlreadyExists:
+                        MessageBox.Show("Session already exists. Unlogin from another client and try again later");
+                        break;
+
+                    case ResponseCode.Login_Fail_IncorrectData:
+                        MessageBox.Show("Login error. Incorrect email or password");
+                        break;
+
+                    case ResponseCode.Login_Fail_Unknown:
+                        MessageBox.Show("Unknown error");
+                        break;
+
+                    default:
+                        MessageBox.Show("Admin durak");
+                        break;
+                }
             }
+            else MessageBox.Show("Not so fast.. Wait");
         }
 
         private void registerLink_Click(object sender, EventArgs e)
         {
             RegisterForm form = new RegisterForm();
             form.ShowDialog();
+        }
+
+        private void LoginForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            loginClient.Dispose();
         }
     }
 }

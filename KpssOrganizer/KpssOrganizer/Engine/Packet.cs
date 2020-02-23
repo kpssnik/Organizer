@@ -19,10 +19,15 @@ namespace KpssOrganizer.Engine
         GroupJoin,
         GetGroupsList,
         GetGroupInfo,
-        BoldDate
+        BoldDate,
+        DeleteBoldedDate
     }
     public enum ResponseCode
     {
+        Default = 0,
+        GroupInfo = 1,
+        ServerUnavailable = 2,
+
         Register_Success = 100,
         Register_Fail_Unknown = 101,
         Register_Fail_UsernameExists = 102,
@@ -225,6 +230,19 @@ namespace KpssOrganizer.Engine
         public string BuildPacket()
         {
             return $"{(int)Type}%{GroupName}%{Login}%{Date}%{Description}";
+        }
+    }
+
+    class DeleteBoldedDatePacket : IPacket
+    {
+        public PacketType Type { get { return PacketType.DeleteBoldedDate; } }
+        public string GroupName { get; set; }
+        public string Date { get; set; }
+        public string Login { get; set; }
+
+        public string BuildPacket()
+        {
+            return $"{(int)Type}%{GroupName}%{Date}%{Login}";
         }
     }
 }

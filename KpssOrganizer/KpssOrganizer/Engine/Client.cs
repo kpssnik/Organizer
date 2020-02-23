@@ -99,13 +99,15 @@ namespace KpssOrganizer
                 case ResponseCode.Login_Fail_AccoundBanned:
                     string banReason = response[2].Split('&')[0];
                     string banDate = response[2].Split('&')[1];
-                    responseString = $"Login error. Account banned.\nReason: {banReason}\nDate:{banDate}";
+                    responseString = $"Login error. Account banned.\nReason: {banReason}\nDate: {banDate}";
                     return ResponseCode.Login_Fail_AccoundBanned;
 
                 default:
                     return (GetResponseCode(response[1]));
             }
         }
+
+
 
         private string ReceiveResponse(UdpClient receiver)
         {
@@ -227,6 +229,19 @@ namespace KpssOrganizer
             receiver.Close();
         }
 
+        public void DeleteBoldedDate(string date, string groupName)
+        {
+            DeleteBoldedDatePacket packet = new DeleteBoldedDatePacket()
+            {
+                Date = date,
+                GroupName = groupName,
+                Login = sessionLogin
+            };
+
+            UdpClient receiver = new UdpClient((int)Port.Client_ResponseReceive);
+            SendPacket(Crypto.SimEncrypt(packet.BuildPacket()));
+            receiver.Close();
+        }
 
         public ResponseCode GetResponseCode(string str)
         {

@@ -30,9 +30,7 @@ namespace kpssOrganizerServer_TEST
 
         public Server()
         {
-            DBManager.Connect(dbPath);
-            DoCheckSessions();
-            DBManager.ClearSessions();
+            
         }
 
         public void DoListen(int port)
@@ -67,12 +65,12 @@ namespace kpssOrganizerServer_TEST
 
             switch (GetPacketType(packetInfo[0]))
             {
-                case PacketType.Login:              
+                case PacketType.Login:
                     ResponsePacket loginResponsePacket = DBManager.LoginAccount(packetInfo[1], packetInfo[2], packetInfo[3]);
                     SendResponse(loginResponsePacket, packetInfo[3]);
                     break;
 
-                case PacketType.Register:                  
+                case PacketType.Register:
                     ResponsePacket registerResponsePacket = DBManager.RegisterAccount(packetInfo[1], packetInfo[2], packetInfo[3], packetInfo[4]);
                     SendResponse(registerResponsePacket, packetInfo[4]);
                     break;
@@ -81,29 +79,34 @@ namespace kpssOrganizerServer_TEST
                     ContinueSession(packetInfo[1]);
                     break;
 
-                case PacketType.GroupCreate:               
-                    ResponsePacket groupCreateResponsePacket = DBManager.CreateGroup(packetInfo[1], packetInfo[2], onlineUsers[packetInfo[3]]);                
+                case PacketType.GroupCreate:
+                    ResponsePacket groupCreateResponsePacket = DBManager.CreateGroup(packetInfo[1], packetInfo[2], onlineUsers[packetInfo[3]]);
                     SendResponse(groupCreateResponsePacket, packetInfo[4]);
                     break;
 
-                case PacketType.GroupJoin:            
+                case PacketType.GroupJoin:
                     ResponsePacket groupJoinResponsePacket = DBManager.JoinGroup(packetInfo[1], packetInfo[2], onlineUsers[packetInfo[3]]);
                     SendResponse(groupJoinResponsePacket, packetInfo[4]);
                     break;
 
-                case PacketType.GetGroupsList:                    
-                    ResponsePacket groupsListPacket = DBManager.GetAccountGroups(onlineUsers[packetInfo[1]]);                  
+                case PacketType.GetGroupsList:
+                    ResponsePacket groupsListPacket = DBManager.GetAccountGroups(onlineUsers[packetInfo[1]]);
                     SendResponse(groupsListPacket, packetInfo[2]);
                     break;
 
-                case PacketType.GetGroupInfo:                   
+                case PacketType.GetGroupInfo:
                     ResponsePacket groupInfoPacket = DBManager.GetGroupInfo(onlineUsers[packetInfo[2]], packetInfo[1]);
                     SendResponse(groupInfoPacket, packetInfo[3]);
                     break;
 
-                case PacketType.BoldDate:                   
+                case PacketType.BoldDate:
                     DBManager.BoldDate(packetInfo[1], packetInfo[2], packetInfo[3], packetInfo[4]);
                     break;
+
+                case PacketType.DeleteBoldedDate:
+                    DBManager.DeleteBoldedDate(packetInfo[1], packetInfo[2], packetInfo[3]);
+                    break;
+
             }
         }
 
@@ -154,10 +157,12 @@ namespace kpssOrganizerServer_TEST
 
                     try
                     {
-
                         switch (command[0])
                         {
                             case "/start":
+                                DBManager.Connect(dbPath);
+                                DoCheckSessions();
+                                DBManager.ClearSessions();
                                 DoListen((int)Port.Server_LoginRegister);
                                 DoListen((int)Port.Server_SessionCheck);
                                 DoListen((int)Port.Server_MainReceiver);
@@ -166,7 +171,7 @@ namespace kpssOrganizerServer_TEST
                                 break;
 
                             case "/stop":
-                                foreach (var th in listeningThreads) th.Abort();
+                                //foreach (var th in listeningThreads) th.Abort();
                                 Environment.Exit(0);
                                 break;
 
@@ -188,7 +193,16 @@ namespace kpssOrganizerServer_TEST
                                 {
                                     case "ai":
                                         DBManager.PrintAccountInfo(command[2], command[3]);
-                                    break;
+                                        break;
+
+                                    case "bi":
+                                        DBManager.PrintBanInfo(command[2], command[3]);
+                                        break;
+
+                                    case "gi":
+                                        DBManager.PrintGroup(command[2], command[3]);
+                                        break;
+
                                 }
 
                                 break;

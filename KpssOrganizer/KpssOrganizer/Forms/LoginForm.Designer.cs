@@ -76,7 +76,7 @@
             this.passwordLabel.FontWeight = MetroFramework.MetroLabelWeight.Regular;
             this.passwordLabel.Location = new System.Drawing.Point(138, 205);
             this.passwordLabel.Name = "passwordLabel";
-            this.passwordLabel.Size = new System.Drawing.Size(108, 25);
+            this.passwordLabel.Size = new System.Drawing.Size(109, 25);
             this.passwordLabel.Style = MetroFramework.MetroColorStyle.Black;
             this.passwordLabel.TabIndex = 3;
             this.passwordLabel.Text = "PASSWORD";
@@ -142,6 +142,7 @@
             this.Resizable = false;
             this.Text = "Login";
             this.TextAlign = System.Windows.Forms.VisualStyles.HorizontalAlign.Center;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LoginForm_FormClosing);
             this.Load += new System.EventHandler(this.LoginForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -15,7 +15,8 @@ namespace kpssOrganizerServer_TEST
         GroupJoin,
         GetGroupsList,
         GetGroupInfo,
-        BoldDate
+        BoldDate,
+        DeleteBoldedDate
     }
     public enum ResponseCode
     {
