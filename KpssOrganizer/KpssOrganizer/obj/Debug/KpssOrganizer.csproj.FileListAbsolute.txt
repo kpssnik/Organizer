@@ -44,3 +44,21 @@ F:\.NET Projects\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.p
 F:\.NET Projects\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.Forms.InitGroupForm.resources
 F:\.NET Projects\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.Forms.BoldDateForm.resources
 F:\.NET Projects\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.Forms.BoldedDateForm.resources
+D:\Users\Student\Documents\Кальницкий\Organizer\KpssOrganizer\KpssOrganizer\bin\Debug\KpssOrganizer.exe.config
+D:\Users\Student\Documents\Кальницкий\Organizer\KpssOrganizer\KpssOrganizer\bin\Debug\KpssOrganizer.exe
+D:\Users\Student\Documents\Кальницкий\Organizer\KpssOrganizer\KpssOrganizer\bin\Debug\KpssOrganizer.pdb
+D:\Users\Student\Documents\Кальницкий\Organizer\KpssOrganizer\KpssOrganizer\bin\Debug\MetroFramework.dll
+D:\Users\Student\Documents\Кальницкий\Organizer\KpssOrganizer\KpssOrganizer\bin\Debug\MetroFramework.Fonts.dll
+D:\Users\Student\Documents\Кальницкий\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.csprojAssemblyReference.cache
+D:\Users\Student\Documents\Кальницкий\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.Forms.BoldDateForm.resources
+D:\Users\Student\Documents\Кальницкий\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.Forms.BoldedDateForm.resources
+D:\Users\Student\Documents\Кальницкий\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.Forms.InitGroupForm.resources
+D:\Users\Student\Documents\Кальницкий\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.LoginForm.resources
+D:\Users\Student\Documents\Кальницкий\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.Forms.MainForm.resources
+D:\Users\Student\Documents\Кальницкий\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.Properties.Resources.resources
+D:\Users\Student\Documents\Кальницкий\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.RegisterForm.resources
+D:\Users\Student\Documents\Кальницкий\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.csproj.GenerateResource.cache
+D:\Users\Student\Documents\Кальницкий\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.csproj.CoreCompileInputs.cache
+D:\Users\Student\Documents\Кальницкий\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.csproj.CopyComplete
+D:\Users\Student\Documents\Кальницкий\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.exe
+D:\Users\Student\Documents\Кальницкий\Organizer\KpssOrganizer\KpssOrganizer\obj\Debug\KpssOrganizer.pdb
