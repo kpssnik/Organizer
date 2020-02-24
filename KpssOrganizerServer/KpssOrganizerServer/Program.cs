@@ -171,6 +171,12 @@ namespace KpssOrganizerServer
                                 PrintMessage("Server started with 3 listening threads", ConsoleColor.Green);
                                 break;
 
+                            case "/connect":
+                                DBManager.Connect(dbPath);
+                                PrintMessage("Connected to database", ConsoleColor.Green);
+                                break;
+                               
+
                             case "/stop":
                                 //foreach (var th in listeningThreads) th.Abort();
                                 Environment.Exit(0);
